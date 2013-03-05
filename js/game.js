@@ -1027,7 +1027,7 @@ function Sync() {
 			}
 			gameName = localStorage.gameName;
 			sync.playerIsWhite = parseInt(localStorage.playerIsWhite, 10);
-			if (localStorage.whitesTurn !== sync.playerIsWhite) {
+			if (localStorage.whitesTurn != sync.playerIsWhite) {
 				syncInterval = setInterval(function () { sync.waitForMove(); }, 5000);
 			}
 		},
