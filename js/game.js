@@ -110,6 +110,8 @@ function Game(savedGame) {
 				}
 			}
 		}
+		
+		document.title = currentTurnString + " - PlainChess";
 		$("#currentTurn").html(currentTurnString);
 		
 		// Last Move
