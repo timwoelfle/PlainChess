@@ -815,10 +815,7 @@ function Game(savedGame) {
 		});
 		
 		// Mirror the first knight of each color
-		$("td > .white.knight:first, td > .black.knight:first").css("-moz-transform", "scaleX(-1)");
-		$("td > .white.knight:first, td > .black.knight:first").css("-webkit-transform", "scaleX(-1)");
-		$("td > .white.knight:first, td > .black.knight:first").css("-o-transform", "scaleX(-1)");
-		$("td > .white.knight:first, td > .black.knight:first").css("-ms-transform", "scaleX(-1)");
+		$("td > .white.knight:first, td > .black.knight:first").css("transform", "scaleX(-1)").css("-moz-transform", "scaleX(-1)").css("-webkit-transform", "scaleX(-1)").css("-o-transform", "scaleX(-1)").css("-ms-transform", "scaleX(-1)");
 		
 		/* Piece draggability */
 		$("td > .piece").each(function (index, element) {
@@ -1093,7 +1090,7 @@ function Sync() {
 		},
 
 		makeMove: function (move) {
-			$.post("php/makeMove.php", { "id": gameName, "startColumn": move.startColumn, "startRow": move.startRow, "endColumn": move.endColumn, "endRow": move.endRow, "promotionType": move.promotionType }, function (data) {
+			$.post("php/makeMove.php", { "id": gameName, "startColumn": move.startColumn, "startRow": move.startRow, "endColumn": move.endColumn, "endRow": move.endRow, "promotionType": move.promotionType, "gameOver": game.gameOver }, function (data) {
 				if (!data) {
 					alert("Error occured during sync! Game might have ended!");
 				} else {

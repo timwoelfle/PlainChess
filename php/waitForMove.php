@@ -1,7 +1,6 @@
 <?php
 	if (!$gameName = $_POST["id"]) return false;
-	if (!$file = fopen("../games/".$gameName, "r")) return false;
-	$line = fgets($file);
-	fclose($file);
+	if (!$line = file_get_contents("../games/".$gameName, 0, NULL, -1, 10)) return false;
+	if (strpos($line, "=") === false) $line = substr($line, 0, 5);
 	echo $line;
 ?>
