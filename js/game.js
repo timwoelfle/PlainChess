@@ -1448,8 +1448,8 @@ controller = (function () {
 		$("#contact").click(function () {
 			$("#contact").unbind();
 			controller.flip($("#contact"), "vertical", 250, function () {
-				$("#contact").html("tim.woelfle@web.de");
-				$("#contact").attr("href", "mailto:tim.woelfle@web.de?subject=PlainChess");
+				$("#contact").html("plainchess@timwoelfle.de");
+				$("#contact").attr("href", "mailto:plainchess@timwoelfle.de?subject=PlainChess");
 			});
 			return false;
 		});
