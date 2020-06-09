@@ -8,7 +8,7 @@
 	if (($promType = $_POST["promotionType"]) && strlen($promType) > 3) return false;
 	$gameOver = $_POST["gameOver"];
 	
-	if (!$oldMoves = file_get_contents("../games/".$gameName, 0, NULL, -1, 100000)) return false;
+	if (!$oldMoves = file_get_contents("../games/".$gameName, 0, NULL, 0, 100000)) return false;
 	$newMove = $startCol . $startRow . " " . $endCol . $endRow;
 	if ($promType) {
 		$newMove .= "=" . $promType;

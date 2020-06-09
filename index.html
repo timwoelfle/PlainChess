@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div id="header">
-		<a href="#" id="toggleFaq">Frequently Asked Questions</a> · <a href="https://github.com/timwoelfle/PlainChess">Code on GitHub</a> · <a href="#" id="contact" style="display: inline-block;">Contact</a>
+		<a href="#" id="toggleFaq">Frequently Asked Questions</a> · <a href="https://GitHub.com/TimWoelfle/PlainChess">Code on GitHub</a> · <a href="http://timwoelfle.de">Other projects</a> · <a href="https://twitter.com/timwoelfle">Twitter</a> · <a href="#" id="contact" style="display: inline-block;">E-Mail</a>
 	</div>
 	
 	<div id="main">
@@ -26,21 +26,20 @@
 
 				<div id="content">
 					<h2>What is PlainChess?</h2>
-
 					<p>PlainChess aims to be a simple yet full–featured and beautiful alternative to the cluttered chess portals currently existing.</p>
-
 					<p>Its primary goal is to allow two persons to play a round of chess, no matter whether they happen to be at the same location or on a different continent. It's designed to be platform independent and to run on every computer or smart phone equipped with a modern web browser and thus enabling people everywhere around the globe to play chess, at home and on the go, online and offline.</p>
-					
-					<p>It was originally published in January 2011 and as of March 2013 its <a href="https://github.com/timwoelfle/PlainChess">code</a> is open source and licensed under the <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GPL Version 3 license</a>.</p>
+					<p>It was originally published in January 2011 and as of March 2013 its <a href="https://GitHub.com/TimWoelfle/PlainChess">code</a> is open source and licensed under the <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GPL Version 3 license</a>.</p>
+
+					<!--<h2>What is the 'awareness mode'?</h2>
+					<p>When playing, you can se a little light bulb (<span style="opacity:0.3">💡</span>) on the bottom left, allowing you to switch on 'awareness mode'. This special mode colorizes the fields depending on which player has more pieces that can access it: Green means that white has more control over a field and red means black. Blue means both players have an equal number of pieces that can possibly strike on it. The richer and darker the color, the more pieces have access.</p>
+					<p>The color code is <em>not</em> a recommendation which fields to move on, it's <em>not</em> artifical intelligence or anything of the like. You still have to use your brains, the color code just helps you not to overlook anything.</p>-->
 
 					<h2>Why yet another chess implementation, what makes PlainChess different?</h2>
 
 					<p>Its minimalistic approach sets it apart from most of the other chess implementations on the internet. They usually use browser plugins like Adobe Flash or even client software to realize the game itself and offer a variety of features around it: news, riddles, communities and dozens of little gadgets.</p>
-
 					<p>Due to this complexity they often take a lot of clicks to get a game started, they tend to react slowly and are often cluttered with ads. Some even require registration fees in order to be able to play a game. PlainChess is free, fast and built on modern web technologies but on the other hand also passes on features beyond basic gameplay.</p>
 
 					<h2>I want a list, what features do you offer?</h2>
-
 					<ul>
 						<li>Online and offline games with an appointed partner</li>
 						<li>Nearly full implementation of all official chess rules</li>
@@ -51,15 +50,12 @@
 					</ul>
 
 					<h2>Which chess rules exactly are implemented, which aren't?</h2>
-
 					<p>Nearly all of them: PlainChess recognizes valid moves as well as <a href="http://en.wikipedia.org/wiki/Check_(chess)">check</a>, <a href="http://en.wikipedia.org/wiki/Checkmate">mate</a> and <a href="http://en.wikipedia.org/wiki/Stalemate">stalemate</a> situations. It also supports the three specials moves of kings and pawns: <a href="http://en.wikipedia.org/wiki/Castling">castling</a>, <a href="http://en.wikipedia.org/wiki/Promotion_(chess)">pawn promotions</a> and <a href="http://en.wikipedia.org/wiki/En_passant">en passant capturing</a>. The only rules currently not supported are the draw rules except for stalemate: <a href="http://en.wikipedia.org/wiki/Threefold_repetition">threefold repetition</a>, <a href="http://en.wikipedia.org/wiki/Fifty-move_rule">the fifty–move rule</a>, impossibility of checkmate and <a href="http://en.wikipedia.org/wiki/Draw_by_agreement">mutual agreement</a>.</p>
 					
 					<h2>I like PlainChess. How can I support you?</h2>
-
-					<p>Spread the word, tell your friends and enemies about PlainChess; twitter, blog or write letters about it. Share it on your social networks. Flattr if you already have an account, otherwise <a href="http://flattr.com/">get one</a>. Send me an e-mail. Have a look at the code and add new features.</p>
+					<p>Spread the word, tell your friends and enemies about PlainChess; twitter, blog or write letters about it. Share it on your social networks. Send me an e-mail. Have a look at <a href="https://GitHub.com/TimWoelfle/PlainChess">the code</a> and add new features.</p>
 					
 					<h2>What features could be implemented next?</h2>
-
 					<h3>General</h3>
 					<ul>
 						<li>Support of time control and chess clocks</li>
@@ -76,24 +72,20 @@
 					</ul>
 
 					<h2>You keep mentioning modern web technologies: What exactly are you talking about?</h2>
-
-					<p>PlainChess is the first chess implementation built completely with HTML5 technologies (at least as far as I know). I'm talking about the buzzword HTML5 here, not W3C HTML5 itself.</p>
-
+					<p>PlainChess is the first chess implementation built completely with HTML5 technologies (at least as far as I know).</p>
 					<p>The game engine is written in JavaScript and relies on the frameworks <a href="http://jquery.com/">jQuery</a> and <a href="http://jqueryui.com/">jQuery UI</a>, which means that offline games can be played without internet connectivity (this would be interesting for a smart phone optimized version with <a href="http://www.w3.org/TR/html5/offline.html">HTML5 manifest</a>).</p>
-
-					<p>The design uses CSS3 en masse: rounded borders, shadows, opacity, sprite images and experimental transitions &amp; transforms. That's right, many of the animations are rendered hardware accelerated with CSS3 transitions and all the spinning/turning stuff you see are CSS3 transforms.</p>
+					<p>The design uses CSS3 en masse: rounded borders, shadows, opacity, sprite images and transitions &amp; transforms.</p>
 
 					<h2>Who are you and why did you make this?</h2>
-
 					<p>I'm Tim Wölfle from Germany and wanted to try out the new possibilities HTML5 technologies offer. At the same time I wanted to play a quick round of chess with a friend on the internet, but didn't find anything that would allow me to start right away and without registration.</p>
 				</div>
 			</div>
 
 			<div id="chess">
 				<div id="info">
-					<p id="currentTurn"></p>
 					<p id="lastMove"></p>
 					<p id="gameTime"></p>
+					<p id="currentTurn"><span></span><!--<a id="toggleAwareness" title="Toggle 'awareness mode', highlighting how many pieces can access each field (see FAQ).">💡</a>--></p>
 				</div>
 
 				<div id="border">
@@ -129,12 +121,12 @@
 					<div class="thin stripe tone40"></div>
 					<div id="hostGame" class="stripe tone55">
 						<h2><span>♙</span>Play white online</h2>
-						<input type="text" value="Host game named…" id="hostGameName" />
+						<input type="text" placeholder="Host game named…" id="hostGameName" />
 						<input type="button" value="Go" />
 					</div>
 					<div id="joinGame" class="stripe tone70">
 						<h2><span>♟</span>Play black online</h2>
-						<input type="text" value="Join game named…" id="joinGameName" />
+						<input type="text" placeholder="Join game named…" id="joinGameName" />
 						<input type="button" value="Go" />
 					</div>
 					<div id="playOffline" class="stripe tone85">
@@ -173,10 +165,8 @@
 			</div>
 		</div>
 	</div>
-	<script src="js/jquery-1.4.4.min.js"></script>
-	<script src="js/jquery-ui-1.8.9.custom.min.js"></script>
-	<script src="js/jquery.caret.1.02.min.js"></script>
-	<script src="js/json2.min.js"></script>
-	<script src="js/game.js"></script>
+	<script src="js/jquery-3.5.1.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/game.min.js"></script>
 </body>
 </html>
