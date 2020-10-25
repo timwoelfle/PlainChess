@@ -2,16 +2,16 @@
 PlainChess aims to be a simple yet full–featured and beautiful alternative to the cluttered chess portals currently existing.  
 
 ## Table of contents
-* [What is PlainChess?](#what-is-plainchess-)
-* [Why yet another chess implementation, what makes PlainChess different?](#why-yet-another-chess-implementation--what-makes-plainchess-different-)
-* [I want a list, what features do you offer?](#i-want-a-list--what-features-do-you-offer-)
-* [Which chess rules exactly are implemented, which aren't?](#which-chess-rules-exactly-are-implemented--which-aren-t-)
-* [I like PlainChess. How can I support you?](#i-like-plainchess-how-can-i-support-you-)
-* [What features could be implemented next?](#what-features-could-be-implemented-next-)
+* [What is PlainChess?](#what-is-plainchess)
+* [Why yet another chess implementation, what makes PlainChess different?](#why-yet-another-chess-implementation--what-makes-plainchess-different)
+* [I want a list, what features do you offer?](#i-want-a-list--what-features-do-you-offer)
+* [Which chess rules exactly are implemented, which aren't?](#which-chess-rules-exactly-are-implemented--which-aren-t)
+* [I like PlainChess. How can I support you?](#i-like-plainchess-how-can-i-support-you)
+* [What features could be implemented next?](#what-features-could-be-implemented-next)
   * [General](#general)
   * [Online mode](#online-mode)
-* [You keep mentioning modern web technologies: What exactly are you talking about?](#you-keep-mentioning-modern-web-technologies--what-exactly-are-you-talking-about-)
-* [Who are you and why did you make this?](#who-are-you-and-why-did-you-make-this-)
+* [You keep mentioning modern web technologies: What exactly are you talking about?](#you-keep-mentioning-modern-web-technologies--what-exactly-are-you-talking-about)
+* [Who are you and why did you make this?](#who-are-you-and-why-did-you-make-this)
 
 ## What is PlainChess?
 Its primary goal is to allow two persons to play a round of chess, no matter whether they happen to be at the same location or on a different continent.
