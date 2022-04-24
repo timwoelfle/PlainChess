@@ -1,11 +1,13 @@
 /*
- * PlainChess v1.2
+ * PlainChess v1.21
  * http://plainchess.timwoelfle.de
  *
  * Copyright by Tim Wölfle (http://timwoelfle.de)
  * Licensed under the GPL Version 3 license (http://www.gnu.org/licenses/gpl-3.0.txt)
  *
  */
+
+/* global $, localStorage, alert */
 
 // ===========
 // = Globals =
@@ -348,7 +350,7 @@ function Game (savedGame) {
       return fields
     }
     this.accessibleFields = function () {
-      var fields = this.captureableFields(); var forward = (that.isWhite) ? 1 : -1; var homeRow = (that.isWhite) ? 1 : 8; var cachedFields; var king = pieceObject($('td > .piece.king.' + ((whitesTurn) ? 'white' : 'black'))); var aggressors = king.field.reachableBy[((this.isWhite) ? 'black' : 'white')]; var i; var lineFld; var behindPiece
+      var fields = this.captureableFields(); var forward = (that.isWhite) ? 1 : -1; var homeRow = (that.isWhite) ? 1 : 8; var cachedFields; var king = pieceObject($('td > .piece.king.' + ((whitesTurn) ? 'white' : 'black'))); var aggressors = king.field.reachableBy[((this.isWhite) ? 'black' : 'white')]; var opponentColor = (that.isWhite) ? 'black' : 'white'; var i; var lineFld; var behindPiece
 
       switch (this.kind) {
         case 'pawn':
@@ -369,31 +371,27 @@ function Game (savedGame) {
           break
         case 'king':
           // Check for castling
-          if (castlingAllowed[this.color].queenSide && field[1][homeRow].piece && field[1][homeRow].piece.kind === 'rook' && !field[2][homeRow].piece && !field[3][homeRow].piece && !field[4][homeRow].piece && !field[3][homeRow].reachableBy[((that.isWhite) ? 'black' : 'white')].length && !field[4][homeRow].reachableBy[((that.isWhite) ? 'black' : 'white')].length && !field[5][homeRow].reachableBy[((that.isWhite) ? 'black' : 'white')].length) {
+          if (castlingAllowed[this.color].queenSide && field[1][homeRow].piece && field[1][homeRow].piece.kind === 'rook' && !field[2][homeRow].piece && !field[3][homeRow].piece && !field[4][homeRow].piece && !field[3][homeRow].reachableBy[opponentColor].length && !field[4][homeRow].reachableBy[opponentColor].length && !field[5][homeRow].reachableBy[opponentColor].length) {
             fields.push(field[3][homeRow])
           }
-          if (castlingAllowed[this.color].kingSide && field[8][homeRow].piece && field[8][homeRow].piece.kind === 'rook' && !field[6][homeRow].piece && !field[7][homeRow].piece && !field[7][homeRow].reachableBy[((that.isWhite) ? 'black' : 'white')].length && !field[6][homeRow].reachableBy[((that.isWhite) ? 'black' : 'white')].length && !field[5][homeRow].reachableBy[((that.isWhite) ? 'black' : 'white')].length) {
+          if (castlingAllowed[this.color].kingSide && field[8][homeRow].piece && field[8][homeRow].piece.kind === 'rook' && !field[6][homeRow].piece && !field[7][homeRow].piece && !field[7][homeRow].reachableBy[opponentColor].length && !field[6][homeRow].reachableBy[opponentColor].length && !field[5][homeRow].reachableBy[opponentColor].length) {
             fields.push(field[7][homeRow])
           }
 
           // Don't move on a dangerous field
-          cachedFields = fields
-          fields = []
-          $.each(cachedFields, function (index, fld) {
-            if (!fld.reachableBy[((that.isWhite) ? 'black' : 'white')].length) {
-              // If king is checked: Make sure not to flee to fields that are not reachable by the enemy yet but would be after the king's move
-              $.each(aggressors, function (index, aggressor) {
-                if (!that.field.inBetween(aggressor.field, fld)) {
-                  // TODO FIXME When there are multiple aggressors and one would be able to reach fld after the move but the other wouldn't, an illegal move/fld is pushed
-                  fields.push(fld)
-                }
+          $.each(fields, function (index, fld) {
+            // Fields that are directly reachable by opponent
+            if (fld.reachableBy[opponentColor].length) {
+              fields[index] = []
+            // You can't run away from bishops, rooks and queens in their direct lines
+            } else {
+              $.each(aggressors, function (aggressorIndex, aggressor) {
+                if (['rook', 'queen'].includes(aggressor.kind) && that.field.inBetweenCross(aggressor.field, fld)) fields[index] = []
+                if (['bishop', 'queen'].includes(aggressor.kind) && that.field.inBetweenDiag(aggressor.field, fld)) fields[index] = []
               })
-              if (!aggressors.length) {
-                fields.push(fld)
-              }
             }
           })
-          return fields
+          return fields.flat()
       }
 
       // If king is checked only certain moves are valid
@@ -417,43 +415,43 @@ function Game (savedGame) {
             }
           })
         }
-        // If king isn't checked make sure he won't be after this move
-      } else {
-        $.each([[-1, 0], [+1, 0], [0, -1], [0, +1], [-1, +1], [-1, -1], [+1, +1], [+1, -1]], function (index, coords) {
-          // If piece is in one of the four outermost board fields, not all lines have to be checked
-          if (!field[that.field.column + coords[0]] || !(lineFld = field[that.field.column + coords[0]][that.field.row + coords[1]])) {
-            // return true; works in $.each as continue does in for
-            return true
-          }
+      }
 
-          // Is piece in between the currently described field and the king?
-          if (that.field.inBetween(lineFld, king.field)) {
-            // Check the whole line from king on
-            for (i = 1; field[king.field.column + coords[0] * i] && (lineFld = field[king.field.column + coords[0] * i][king.field.row + coords[1] * i]); i++) {
-              if (lineFld.piece) {
-                // First for this piece
-                if (lineFld.piece === that) {
-                  behindPiece = true
+      // Make sure king won't be checked after this move
+      $.each([[-1, 0], [+1, 0], [0, -1], [0, +1], [-1, +1], [-1, -1], [+1, +1], [+1, -1]], function (index, coords) {
+        // If piece is in one of the four outermost board fields, not all lines have to be checked
+        if (!field[that.field.column + coords[0]] || !(lineFld = field[that.field.column + coords[0]][that.field.row + coords[1]])) {
+          // return true; works in $.each as continue does in for
+          return true
+        }
 
-                  continue
-                  // Secondly for possible aggressors
-                } else if (behindPiece && lineFld.piece.isWhite !== that.isWhite && (lineFld.piece.kind === 'queen' || (lineFld.piece.kind === 'bishop' && index > 3) || (lineFld.piece.kind === 'rook' && index < 4))) {
-                  // If this piece is protecting the king, make sure it stays in the line
-                  cachedFields = fields
-                  fields = []
-                  $.each(cachedFields, function (index, cachedFld) {
-                    if (cachedFld.inBetween(king.field, lineFld) || cachedFld === lineFld) {
-                      fields.push(cachedFld)
-                    }
-                  })
-                }
+        // Is piece in between the currently described field and the king?
+        if (that.field.inBetween(lineFld, king.field)) {
+          // Check the whole line from king on
+          for (i = 1; field[king.field.column + coords[0] * i] && (lineFld = field[king.field.column + coords[0] * i][king.field.row + coords[1] * i]); i++) {
+            if (lineFld.piece) {
+              // First for this piece
+              if (lineFld.piece === that) {
+                behindPiece = true
 
-                return false
+                continue
+                // Secondly for possible aggressors
+              } else if (behindPiece && lineFld.piece.isWhite !== that.isWhite && (lineFld.piece.kind === 'queen' || (lineFld.piece.kind === 'bishop' && index > 3) || (lineFld.piece.kind === 'rook' && index < 4))) {
+                // If this piece is protecting the king, make sure it stays in the line
+                cachedFields = fields
+                fields = []
+                $.each(cachedFields, function (index, cachedFld) {
+                  if (cachedFld.inBetween(king.field, lineFld) || cachedFld === lineFld) {
+                    fields.push(cachedFld)
+                  }
+                })
               }
+
+              return false
             }
           }
-        })
-      }
+        }
+      })
 
       return fields
     }
@@ -741,19 +739,27 @@ function Game (savedGame) {
       this.piece = new Piece($('<div class="piece ' + pieceSymbols[pieceSymbol].color + ' ' + pieceSymbols[pieceSymbol].kind + '">' + pieceSymbol + '</div>').appendTo(fieldElement)[0])
     }
 
-    this.inBetween = function (startField, endField) {
+    this.inBetweenCross = function (startField, endField) {
       // Vertically
       if (startField.column === endField.column && this.column === startField.column) {
         return (this.row < startField.row && this.row > endField.row) || (this.row > startField.row && this.row < endField.row)
-        // Horizontally
+      // Horizontally
       } else if (startField.row === endField.row && this.row === startField.row) {
         return (this.column < startField.column && this.column > endField.column) || (this.column > startField.column && this.column < endField.column)
-        // Diagonally
-      } else if (Math.abs(startField.column - endField.column) === Math.abs(startField.row - endField.row)) {
+      }
+      return false
+    }
+
+    this.inBetweenDiag = function (startField, endField) {
+      // Diagonally
+      if (Math.abs(startField.column - endField.column) === Math.abs(startField.row - endField.row)) {
         return Math.abs(startField.column - this.column) === Math.abs(startField.row - this.row) && Math.abs(startField.column - this.column) < Math.abs(startField.column - endField.column) && Math.abs(endField.column - this.column) < Math.abs(startField.column - endField.column) && Math.abs(startField.row - this.row) < Math.abs(startField.row - endField.row) && Math.abs(endField.row - this.row) < Math.abs(startField.row - endField.row)
       }
-
       return false
+    }
+
+    this.inBetween = function (startField, endField) {
+      return this.inBetweenCross(startField, endField) || this.inBetweenDiag(startField, endField)
     }
   }
 
@@ -1304,7 +1310,7 @@ function Menu (name) {
     },
 
     error: function (input, msg) {
-      input.value = ""
+      input.value = ''
       input.placeholder = msg
       $(input).addClass('error').focus()
     },
