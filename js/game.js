@@ -1,5 +1,5 @@
 /*
- * PlainChess v1.21
+ * PlainChess v1.22
  * http://plainchess.timwoelfle.de
  *
  * Copyright by Tim Wölfle (http://timwoelfle.de)
@@ -350,7 +350,7 @@ function Game (savedGame) {
       return fields
     }
     this.accessibleFields = function () {
-      var fields = this.captureableFields(); var forward = (that.isWhite) ? 1 : -1; var homeRow = (that.isWhite) ? 1 : 8; var cachedFields; var king = pieceObject($('td > .piece.king.' + ((whitesTurn) ? 'white' : 'black'))); var aggressors = king.field.reachableBy[((this.isWhite) ? 'black' : 'white')]; var opponentColor = (that.isWhite) ? 'black' : 'white'; var i; var lineFld; var behindPiece
+      var fields = this.captureableFields(); var forward = (that.isWhite) ? 1 : -1; var homeRow = (that.isWhite) ? 1 : 8; var cachedFields; var king = pieceObject($('td > .piece.king.' + ((that.isWhite) ? 'white' : 'black'))); var opponentColor = (that.isWhite) ? 'black' : 'white'; var aggressors = king.field.reachableBy[opponentColor]; var i; var lineFld; var behindPiece
 
       switch (this.kind) {
         case 'pawn':
@@ -922,7 +922,7 @@ function Game (savedGame) {
     },
 
     receiveCoordinates: function (startColumn, startRow, endColumn, endRow, promotionType, preanimation) {
-      var startField, targetField, piece, validMove
+      var startField; var targetField; var piece; var validMove = false
 
       startField = document.getElementById(startColumn + '' + startRow)
       targetField = document.getElementById(endColumn + '' + endRow)
@@ -952,7 +952,7 @@ function Game (savedGame) {
         pieceObject(piece).animateMove(fieldObject(targetField), promotionType)
       }
 
-      return !!(validMove)
+      return validMove
     },
 
     updateLocalStorage: function () {
@@ -1528,7 +1528,11 @@ controller = (function () {
         if (typeof callback === 'function') {
           callback()
         }
-      }).css('transition-property', 'transform').css('transition-duration', duration / 2 + 'ms').css('transition-timing-function', 'ease-in').addClass(className)
+      }).css('transition-property', 'transform').css('transition-duration', duration / 2 + 'ms').css('transition-timing-function', 'ease-in')
+
+      setTimeout(function () {
+        $(element).addClass(className)
+      })
     }
   }
 }())
