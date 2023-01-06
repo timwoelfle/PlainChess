@@ -7,7 +7,7 @@
 	if ((!$endRow = $_POST["endRow"]) || intval($endRow) < 1 || intval($endRow) > 8) return false;
 	if (($promType = $_POST["promotionType"]) && strlen($promType) > 3) return false;
 	$gameOver = $_POST["gameOver"];
-	
+
 	if (!$oldMoves = file_get_contents("../games/".$gameName, 0, NULL, 0, 100000)) return false;
 	$newMove = $startCol . $startRow . " " . $endCol . $endRow;
 	if ($promType) {
@@ -16,8 +16,9 @@
 	$newMove .= " " . date("d.m.Y H:i:s");
 	file_put_contents("../games/".$gameName, $newMove . "\n" . $oldMoves);
 	if ($gameOver) {
+		mkdir("../games/finished/");
 		copy("../games/".$gameName, "../games/finished/".$gameName);
 	}
-	
+
 	echo $gameName;
 ?>
